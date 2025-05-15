@@ -1,88 +1,75 @@
-'use client';
 
-import { useState, useEffect } from 'react';
-import ProviderSearchForm, { type SearchFilters } from '@/components/providers/provider-search-form';
-import ProviderCard from '@/components/providers/provider-card';
-import { mockProviders } from '@/data/mock-data';
-import type { Provider } from '@/lib/types';
-import { AlertCircle } from 'lucide-react';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import Link from 'next/link';
+import Image from 'next/image';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { ArrowRight, Search, UserCheck, DollarSign } from 'lucide-react';
 
-export default function ProviderDirectoryPage() {
-  const [filteredProviders, setFilteredProviders] = useState<Provider[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [searchAttempted, setSearchAttempted] = useState(false);
-
-  useEffect(() => {
-    // Simulate initial load or load all providers by default
-    // For now, an empty search shows all providers after initial load
-    setFilteredProviders(mockProviders);
-    setIsLoading(false);
-  }, []);
-
-  const handleSearch = (filters: SearchFilters) => {
-    setIsLoading(true);
-    setSearchAttempted(true);
-    // Simulate API call delay
-    setTimeout(() => {
-      const results = mockProviders.filter(provider => {
-        const specialtyMatch = filters.specialty ? provider.specialty.toLowerCase() === filters.specialty.toLowerCase() : true;
-        const locationMatch = filters.location ? 
-          provider.city.toLowerCase().includes(filters.location.toLowerCase()) || 
-          provider.zipCode.includes(filters.location) ||
-          provider.state.toLowerCase().includes(filters.location.toLowerCase())
-          : true;
-        const insuranceMatch = filters.insurance ? provider.acceptedInsurancePlans.some(plan => plan.toLowerCase() === filters.insurance.toLowerCase()) : true;
-        return specialtyMatch && locationMatch && insuranceMatch;
-      });
-      setFilteredProviders(results);
-      setIsLoading(false);
-    }, 500);
-  };
-
+export default function WelcomePage() {
   return (
-    <div className="space-y-8">
-      <section className="text-center py-8 bg-card shadow-md rounded-lg">
-        <h1 className="text-4xl font-bold text-primary">Find Your Healthcare Provider</h1>
-        <p className="mt-2 text-lg text-muted-foreground">
-          Search our directory for trusted doctors, specialists, and clinics.
+    <div className="flex flex-col items-center text-center space-y-10">
+      <section className="space-y-4 mt-8">
+        <h1 className="text-5xl font-bold text-primary">Welcome to Healthcare Marketplace</h1>
+        <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+          Your trusted partner in finding quality healthcare. Easily search, compare, and connect with providers that meet your needs.
         </p>
       </section>
 
-      <ProviderSearchForm onSearch={handleSearch} />
+      <Image
+        src="https://placehold.co/700x350.png"
+        alt="Healthcare professionals collaborating"
+        width={700}
+        height={350}
+        className="rounded-lg shadow-xl object-cover"
+        data-ai-hint="healthcare team"
+        priority // Good for LCP on a welcome page
+      />
 
-      {isLoading ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {[...Array(3)].map((_, index) => (
-            <div key={index} className="bg-card p-6 rounded-lg shadow animate-pulse">
-              <div className="h-48 bg-muted rounded-t-lg mb-4"></div>
-              <div className="h-6 w-3/4 bg-muted rounded mb-2"></div>
-              <div className="h-4 w-1/2 bg-muted rounded mb-2"></div>
-              <div className="h-4 w-1/3 bg-muted rounded mb-4"></div>
-              <div className="h-10 w-full bg-primary/50 rounded"></div>
-            </div>
-          ))}
+      <Button asChild size="lg" className="shadow-md hover:shadow-lg transition-shadow !text-lg !py-6 !px-8">
+        <Link href="/directory">
+          Find Your Provider
+          <ArrowRight className="ml-2 h-5 w-5" />
+        </Link>
+      </Button>
+
+      <section className="w-full max-w-5xl pt-10 pb-8">
+        <h2 className="text-3xl font-semibold text-center mb-10 text-foreground">Why Choose Us?</h2>
+        <div className="grid md:grid-cols-3 gap-8">
+          <Card className="shadow-md hover:shadow-lg transition-shadow duration-300">
+            <CardHeader className="items-center pt-6">
+              <div className="bg-primary/10 p-3 rounded-full mb-3">
+                <Search className="h-10 w-10 text-primary" />
+              </div>
+              <CardTitle className="text-xl">Easy Search</CardTitle>
+            </CardHeader>
+            <CardContent className="text-center pb-6">
+              <p className="text-muted-foreground">Quickly find providers by specialty, location, and insurance coverage.</p>
+            </CardContent>
+          </Card>
+          <Card className="shadow-md hover:shadow-lg transition-shadow duration-300">
+            <CardHeader className="items-center pt-6">
+              <div className="bg-primary/10 p-3 rounded-full mb-3">
+                <UserCheck className="h-10 w-10 text-primary" />
+              </div>
+              <CardTitle className="text-xl">Verified Profiles</CardTitle>
+            </CardHeader>
+            <CardContent className="text-center pb-6">
+              <p className="text-muted-foreground">Access detailed and trustworthy information about healthcare professionals.</p>
+            </CardContent>
+          </Card>
+          <Card className="shadow-md hover:shadow-lg transition-shadow duration-300">
+            <CardHeader className="items-center pt-6">
+              <div className="bg-primary/10 p-3 rounded-full mb-3">
+                <DollarSign className="h-10 w-10 text-primary" />
+              </div>
+              <CardTitle className="text-xl">Transparent Info</CardTitle>
+            </CardHeader>
+            <CardContent className="text-center pb-6">
+              <p className="text-muted-foreground">Gain insights into services, costs, and quality metrics for informed decisions.</p>
+            </CardContent>
+          </Card>
         </div>
-      ) : (
-        <>
-          {searchAttempted && filteredProviders.length === 0 && (
-             <Alert variant="default" className="border-yellow-500 bg-yellow-50 text-yellow-700">
-              <AlertCircle className="h-5 w-5 text-yellow-500" />
-              <AlertTitle className="font-semibold">No Providers Found</AlertTitle>
-              <AlertDescription>
-                We couldn&apos;t find any providers matching your search criteria. Please try different filters.
-              </AlertDescription>
-            </Alert>
-          )}
-          {filteredProviders.length > 0 && (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-8">
-              {filteredProviders.map(provider => (
-                <ProviderCard key={provider.id} provider={provider} />
-              ))}
-            </div>
-          )}
-        </>
-      )}
+      </section>
     </div>
   );
 }

@@ -1,3 +1,4 @@
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -25,7 +26,7 @@ export default function ProviderProfilePage({ params }: ProviderProfilePageProps
 
   const breadcrumbItems = [
     { label: 'Home', href: '/' },
-    { label: 'Providers', href: '/' },
+    { label: 'Directory', href: '/directory' },
     { label: provider.name },
   ];
 
