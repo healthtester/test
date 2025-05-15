@@ -1,3 +1,4 @@
+
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
@@ -8,8 +9,8 @@ import AppFooter from '@/components/common/footer';
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 
 export const metadata: Metadata = {
-  title: 'Healthcare Marketplace',
-  description: 'Find and compare healthcare providers.',
+  title: 'My Health Navigator',
+  description: 'Access patient data, decision-making tools, and resources to improve your health.',
 };
 
 export default function RootLayout({
@@ -30,3 +31,4 @@ export default function RootLayout({
     </html>
   );
 }
+
