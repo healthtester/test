@@ -1,3 +1,4 @@
+
 'use client';
 
 import type { ChangeEvent, FormEvent } from 'react';
@@ -20,6 +21,9 @@ interface ProviderSearchFormProps {
   initialFilters?: Partial<SearchFilters>;
 }
 
+const ANY_SPECIALTY_VALUE = '__ANY_SPECIALTY_SENTINEL__';
+const ANY_INSURANCE_VALUE = '__ANY_INSURANCE_SENTINEL__';
+
 export default function ProviderSearchForm({ onSearch, initialFilters = {} }: ProviderSearchFormProps) {
   const [specialty, setSpecialty] = useState(initialFilters.specialty || '');
   const [location, setLocation] = useState(initialFilters.location || '');
@@ -30,6 +34,22 @@ export default function ProviderSearchForm({ onSearch, initialFilters = {} }: Pr
     onSearch({ specialty, location, insurance });
   };
 
+  const handleSpecialtyChange = (newValue: string) => {
+    if (newValue === ANY_SPECIALTY_VALUE) {
+      setSpecialty('');
+    } else {
+      setSpecialty(newValue);
+    }
+  };
+
+  const handleInsuranceChange = (newValue: string) => {
+    if (newValue === ANY_INSURANCE_VALUE) {
+      setInsurance('');
+    } else {
+      setInsurance(newValue);
+    }
+  };
+
   return (
     <form onSubmit={handleSubmit} className="bg-card p-6 rounded-lg shadow-lg mb-8">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-end">
@@ -38,12 +58,12 @@ export default function ProviderSearchForm({ onSearch, initialFilters = {} }: Pr
             <BriefcaseMedical className="mr-2 h-5 w-5 text-primary" />
             Specialty
           </Label>
-          <Select value={specialty} onValueChange={setSpecialty}>
+          <Select value={specialty} onValueChange={handleSpecialtyChange}>
             <SelectTrigger id="specialty">
               <SelectValue placeholder="Any Specialty" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">Any Specialty</SelectItem>
+              <SelectItem value={ANY_SPECIALTY_VALUE}>Any Specialty</SelectItem>
               {specialties.map((s) => (
                 <SelectItem key={s} value={s}>{s}</SelectItem>
               ))}
@@ -68,12 +88,12 @@ export default function ProviderSearchForm({ onSearch, initialFilters = {} }: Pr
             <ShieldCheck className="mr-2 h-5 w-5 text-primary" />
             Insurance Plan
           </Label>
-          <Select value={insurance} onValueChange={setInsurance}>
+          <Select value={insurance} onValueChange={handleInsuranceChange}>
             <SelectTrigger id="insurance">
               <SelectValue placeholder="Any Insurance" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">Any Insurance</SelectItem>
+              <SelectItem value={ANY_INSURANCE_VALUE}>Any Insurance</SelectItem>
               {insurancePlans.map((plan) => (
                 <SelectItem key={plan} value={plan}>{plan}</SelectItem>
               ))}
