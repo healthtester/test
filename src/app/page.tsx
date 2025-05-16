@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowRight, UserCog, Lightbulb, BookOpenCheck, Search } from 'lucide-react';
+import { ArrowRight, UserCog, Lightbulb, BookOpenCheck, Search, Share2 } from 'lucide-react';
 
 export default function WelcomePage() {
   return (
@@ -46,17 +46,19 @@ export default function WelcomePage() {
               <p className="text-muted-foreground">Securely connect with your health data for a tailored experience and insights.</p>
             </CardContent>
           </Card>
-          <Card className="shadow-md hover:shadow-lg transition-shadow duration-300">
-            <CardHeader className="items-center pt-6">
-              <div className="bg-primary/10 p-3 rounded-full mb-3">
-                <Lightbulb className="h-10 w-10 text-primary" />
-              </div>
-              <CardTitle className="text-xl">Decision Support</CardTitle>
-            </CardHeader>
-            <CardContent className="text-center pb-6">
-              <p className="text-muted-foreground">Utilize tools to create action plans and understand treatment options.</p>
-            </CardContent>
-          </Card>
+          <Link href="/decision-support" className="block">
+            <Card className="shadow-md hover:shadow-lg transition-shadow duration-300 h-full">
+              <CardHeader className="items-center pt-6">
+                <div className="bg-primary/10 p-3 rounded-full mb-3">
+                  <Lightbulb className="h-10 w-10 text-primary" />
+                </div>
+                <CardTitle className="text-xl">Decision Support</CardTitle>
+              </CardHeader>
+              <CardContent className="text-center pb-6">
+                <p className="text-muted-foreground">Utilize tools to create action plans and understand treatment options.</p>
+              </CardContent>
+            </Card>
+          </Link>
           <Card className="shadow-md hover:shadow-lg transition-shadow duration-300">
             <CardHeader className="items-center pt-6">
               <div className="bg-primary/10 p-3 rounded-full mb-3">
@@ -70,7 +72,7 @@ export default function WelcomePage() {
           </Card>
         </div>
         <div className="mt-12 text-center">
-            <p className="text-lg text-muted-foreground">Still looking for a healthcare provider?</p>
+            <p className="text-lg text-muted-foreground">Looking for a healthcare provider?</p>
              <Button asChild variant="link" className="text-lg text-primary">
                 <Link href="/directory">
                     Search Our Provider Directory <Search className="ml-2 h-5 w-5" />
@@ -81,4 +83,3 @@ export default function WelcomePage() {
     </div>
   );
 }
-
