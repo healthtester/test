@@ -35,17 +35,19 @@ export default function WelcomePage() {
       <section className="w-full max-w-5xl pt-10 pb-8">
         <h2 className="text-3xl font-semibold text-center mb-10 text-foreground">Key Features to Empower You</h2>
         <div className="grid md:grid-cols-3 gap-8">
-          <Card className="shadow-md hover:shadow-lg transition-shadow duration-300">
-            <CardHeader className="items-center pt-6">
-              <div className="bg-primary/10 p-3 rounded-full mb-3">
-                <UserCog className="h-10 w-10 text-primary" />
-              </div>
-              <CardTitle className="text-xl">Personalized Insights</CardTitle>
-            </CardHeader>
-            <CardContent className="text-center pb-6">
-              <p className="text-muted-foreground">Securely connect with your health data for a tailored experience and insights.</p>
-            </CardContent>
-          </Card>
+          <Link href="/personalized-insights" className="block">
+            <Card className="shadow-md hover:shadow-lg transition-shadow duration-300 h-full">
+              <CardHeader className="items-center pt-6">
+                <div className="bg-primary/10 p-3 rounded-full mb-3">
+                  <UserCog className="h-10 w-10 text-primary" />
+                </div>
+                <CardTitle className="text-xl">Personalized Insights</CardTitle>
+              </CardHeader>
+              <CardContent className="text-center pb-6">
+                <p className="text-muted-foreground">Securely connect with your health data for a tailored experience and insights.</p>
+              </CardContent>
+            </Card>
+          </Link>
           <Link href="/decision-support" className="block">
             <Card className="shadow-md hover:shadow-lg transition-shadow duration-300 h-full">
               <CardHeader className="items-center pt-6">
